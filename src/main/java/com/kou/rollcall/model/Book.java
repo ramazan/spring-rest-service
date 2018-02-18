@@ -1,26 +1,31 @@
 package com.kou.rollcall.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import java.util.Date;
 
 @Data
-@ToString
-@Entity(name = "KITAPLAR")
+@EqualsAndHashCode(exclude = "author")
+@ToString(exclude = "author")
+@Entity
 public class Book
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String bookName;
 
-    @Column(name = "KITAP_ADI")
-    private String name;
+    @CreationTimestamp
+    private Date createdDate;
 
-    @Column(name = "KITAP_YAZARI")
-    private String author;
+    @ManyToOne
+    private Author author;
 }

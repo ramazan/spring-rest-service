@@ -1,5 +1,6 @@
 package com.kou.rollcall.rest;
 
+import com.kou.rollcall.model.Author;
 import com.kou.rollcall.model.Book;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,6 +21,10 @@ public class BookService
 {
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
+
 
     @PostMapping(value = "/saveBook")
     private ResponseEntity<Book> saveBook(@RequestBody Book book)
@@ -34,16 +40,22 @@ public class BookService
         return bookRepository.findAll();
     }
 
-    @GetMapping(value = "/getBooks/{author}")
-    private List<Book> getBooks(@PathVariable(value = "author") String author)
+    @GetMapping(value = "/getAuthors")
+    private List<Author> getAuthors()
     {
-        return bookRepository.getAllByAuthor(author);
+        return authorRepository.findAll();
     }
 
-    @GetMapping(value = "/getBooks/{author}/{name}")
-    private List<Book> getBooks(@PathVariable(value = "author") String author, @PathVariable(value = "name") String name)
+    @GetMapping(value = {"/getBooks/{authorName}", "/getAuthors/{authorName}"})
+    private List<Book> getBooks(@PathVariable("authorName") String author)
     {
-        return bookRepository.getBooksByAuthorAndAndName(author, name);
+        return bookRepository.getAllByAuthor(authorRepository.getAuthorByName(author));
+    }
+
+    @GetMapping(value = "/getBooks/{authorName}/{bookName}")
+    private Book getBooks(@PathVariable("authorName") String author, @PathVariable(value = "bookName") String name)
+    {
+        return bookRepository.getBookByAuthorAndBookName(authorRepository.getAuthorByName(author), name);
     }
 
 }

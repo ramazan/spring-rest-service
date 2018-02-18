@@ -1,6 +1,3 @@
-INSERT INTO kitaplar (kitap_yazari, kitap_adi) VALUES ('Ramazan', 'Java Core');
-INSERT INTO kitaplar (kitap_yazari, kitap_adi) VALUES ('Resobyte', 'C# Guru');
-INSERT INTO kitaplar (kitap_yazari, kitap_adi) VALUES ('Umut', 'Android Firebase');
-INSERT INTO kitaplar (kitap_yazari, kitap_adi) VALUES ('Resobyte', 'ASP.NET MVC');
-INSERT INTO kitaplar (kitap_yazari, kitap_adi) VALUES ('Umut', 'Kotlin');
-INSERT INTO kitaplar (kitap_yazari, kitap_adi) VALUES ('Ramazan', 'Spring');
+INSERT INTO author (name, description, publish_home) VALUES ('Ramazan', 'Java Lover', 'Papatya Yayıncılık');
+INSERT INTO author (name, description, publish_home) VALUES ('Umut', 'Android Developer', 'İşte Yayınevi');
+INSERT INTO author (name, description, publish_home) VALUES ('Resobyte', 'C# Developer', 'Morgül Yayıncılık');
