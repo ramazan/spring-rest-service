@@ -34,6 +34,9 @@ public class Academician
     @JsonIgnore
     private Set<Lesson> lessons = new HashSet<>();
 
+    @JsonIgnore
+    private String password;
+
     @Enumerated(value = EnumType.STRING)
     private Department department;
 

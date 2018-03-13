@@ -28,14 +28,14 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
             "Yazılım Mühendisliği", "Linux Ağ Yönetimi", "Programlama I"
             , "Yazılım Proje Yönetimi", "Kontrol Sistemleri", "Sayısal Veri İletişimi", "Robotik Sistemler"));
 
-    public  List<String> days =  new ArrayList<>(Arrays.asList("Pztsi","Salı","Çarş","Perş","Cuma"));
+    public  List<String> days =  new ArrayList<>(Arrays.asList("Pazartesi","Salı","Çarşamba","Perşembe","Cuma"));
 
     public  List<String> location =  new ArrayList<>(Arrays.asList("305","303","Amfi-B","Amfi-A","301"));
 
     public  List<String> clock =  new ArrayList<>(Arrays.asList("10:30","09:00","14:00","19:45","13:30"));
 
-    public List<Faculty> facultyList =  new ArrayList<>(Arrays.asList(Faculty.ENGINEERING,Faculty.ENGINEERING,Faculty.COMMUNICATION));
-    public List<Department> departmentList =  new ArrayList<>(Arrays.asList(Department.COMPUTER_ENGINEERING,Department.MECHANIC_ENGINEERING,Department.HISTORY));
+    public List<Faculty> facultyList =  new ArrayList<>(Arrays.asList(Faculty.Mühendislik,Faculty.Mühendislik,Faculty.Mühendislik));
+    public List<Department> departmentList =  new ArrayList<>(Arrays.asList(Department.Bilgisiyar_Mühendisliği,Department.Makine_Mühendisliği,Department.Endüstri_Mühendisliği));
 
     @Autowired
     private AcademicianRepository academicianRepository;

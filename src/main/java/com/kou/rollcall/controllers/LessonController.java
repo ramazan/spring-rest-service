@@ -81,37 +81,6 @@ public class LessonController
 //        log.info("Books Saved  : " + book);
 //        return new ResponseEntity<Book>(book, HttpStatus.OK);
 //    }
-//
-//    @GetMapping(value = "/getBooks")
-//    private List<Book> getBooks()
-//    {
-//        return bookRepository.findAll();
-//    }
-//
-//    @GetMapping(value = "/getAuthors")
-//    private List<Author> getAuthors()
-//    {
-//        return authorRepository.findAll();
-//    }
-//
-//    @GetMapping(value = {"/getBooks/{authorName}", "/getAuthors/{authorName}"})
-//    private List<Book> getBooks(@PathVariable("authorName") String author)
-//    {
-//        return bookRepository.getAllByAuthor(authorRepository.getAuthorByName(author));
-//    }
-//
-//    @GetMapping(value = "/getBooks/{authorName}/{bookName}")
-//    private Book getBooks(@PathVariable("authorName") String author, @PathVariable(value = "bookName") String name)
-//    {
-//        return bookRepository.getBookByAuthorAndBookName(authorRepository.getAuthorByName(author), name);
-//    }
 
-//
-//    @GetMapping("/lesson/academician/{name}")
-//    private Set<Lesson> getStudentsByLesson(@PathVariable("name") String lessonName)
-//    {
-//        Lesson lesson = lessonRepository.getLessonByName(lessonName);
-//        return lesson.getStudents();
-//    }
 
 }

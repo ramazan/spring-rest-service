@@ -29,8 +29,10 @@ public class Student
 
     private Long number;
     private String surname;
-    private String username;
     private String macId;
+
+    @JsonIgnore
+    private String password;
 
 
     @ManyToMany(mappedBy = "students",fetch = FetchType.LAZY)

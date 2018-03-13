@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface AcademicianRepository extends CrudRepository<Academician,Long> , JpaRepository<Academician,Long>
 {
     Academician getAcademicianByName(String name);
+    Academician getAcademicianByUsernameAndPassword(String username,String password);
 }
