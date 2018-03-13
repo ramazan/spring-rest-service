@@ -1,10 +1,13 @@
 package com.kou.rollcall.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +31,12 @@ public class Academician
 
     @OneToMany(mappedBy = "academician")
     @JsonIgnoreProperties("academician")
+    @JsonIgnore
     private Set<Lesson> lessons = new HashSet<>();
 
+    @Enumerated(value = EnumType.STRING)
+    private Department department;
+
+    @Enumerated(value = EnumType.STRING)
+    private Faculty faculty;
 }

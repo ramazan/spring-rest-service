@@ -9,6 +9,8 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,11 +35,23 @@ public class Lesson
     @ManyToOne
     @JoinColumn(name = "academician_id")
     @JsonIgnoreProperties("lessons")
+    @JsonIgnore
     private Academician academician;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("lessons")
+    @JsonIgnore
     private Set<Student> students = new HashSet<>();
+
+    @Enumerated(value = EnumType.STRING)
+    private Department department;
+
+    @Enumerated(value = EnumType.STRING)
+    private Faculty faculty;
+
+    private String clock;
+    private String day;
+    private String location;
 
 
 //    @ManyToMany(fetch = FetchType.EAGER)

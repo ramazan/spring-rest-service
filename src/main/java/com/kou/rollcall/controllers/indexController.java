@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class indexController
 {
 
-    @Autowired
-    private LessonRepository lessonRepository;
+//    @Autowired
+//    private LessonRepository lessonRepository;
 
     @RequestMapping({"", "/", "/index"})
     private String index()

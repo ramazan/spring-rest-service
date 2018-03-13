@@ -15,7 +15,7 @@ import java.util.List;
 @Log4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = KouApplication.class)
-public class BookServiceImplTest
+public class LessonControllerTest
 {
 
     @Autowired
