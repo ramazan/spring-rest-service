@@ -35,10 +35,17 @@ public class LessonController
     @Autowired
     private LessonServiceImpl lessonService;
 
-    @GetMapping("/lessons/{name}")
-    private List<Lesson> getLessonsByAcademician(@PathVariable("name") String name)
+    @GetMapping("/lessons/{username}/academicianUsername")
+    private List<Lesson> getLessonsByAcademician(@PathVariable("username") String username)
     {
-        List<Lesson> lessons = lessonRepository.getLessonByAcademician_Name(name);
+        List<Lesson> lessons = lessonRepository.getLessonByAcademician_Username(username);
+        return lessons;
+    }
+
+    @GetMapping("/lessons/{id}/academicianId")
+    private List<Lesson> getLessonsByAcademicianId(@PathVariable("id") String id)
+    {
+        List<Lesson> lessons = lessonRepository.getLessonsByAcademician_Id(Long.parseLong(id));
         return lessons;
     }
 
@@ -56,7 +63,7 @@ public class LessonController
         return lessons;
     }
 
-    @GetMapping("/students/{name}")
+    @GetMapping("/students/{name}/lessonName")
     private Set<Student> getStudentsByLessonName(@PathVariable("name") String lessonName)
     {
         Lesson lesson = lessonRepository.getLessonByName(lessonName);

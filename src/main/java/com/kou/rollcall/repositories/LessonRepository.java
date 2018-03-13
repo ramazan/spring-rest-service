@@ -12,7 +12,8 @@ import java.util.List;
 
 public interface LessonRepository extends CrudRepository<Lesson, Long>, JpaRepository<Lesson, Long>
 {
-    List<Lesson> getLessonByAcademician_Name(String name);
+    List<Lesson> getLessonByAcademician_Username(String username);
+    List<Lesson> getLessonsByAcademician_Id(Long id);
 
     @Query("from Lesson where department = :department")
     List<Lesson> getLessonsByDepartment(@Param("department") Department department);
