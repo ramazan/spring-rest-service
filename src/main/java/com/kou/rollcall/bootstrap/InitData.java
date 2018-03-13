@@ -72,8 +72,8 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
             lesson.getStudents().add(Student);
             lesson.getStudents().add(Student1);
             lesson.getStudents().add(Student2);
-            lesson.setDepartment(departmentList.get(rnd));
-            lesson.setFaculty(facultyList.get(rnd));
+//            lesson.setDepartment(departmentList.get(rnd));
+//            lesson.setFaculty(facultyList.get(rnd));
             lesson.setClock(clock.get(rand.nextInt(5)));
             lesson.setDay(days.get(rand.nextInt(5)));
             lesson.setLocation(location.get(rand.nextInt(5)));

@@ -2,6 +2,7 @@ package com.kou.rollcall.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -35,7 +36,7 @@ public class Lesson
     @ManyToOne
     @JoinColumn(name = "academician_id")
     @JsonIgnoreProperties("lessons")
-    @JsonIgnore
+//    @JsonIgnore
     private Academician academician;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -43,11 +44,11 @@ public class Lesson
     @JsonIgnore
     private Set<Student> students = new HashSet<>();
 
-    @Enumerated(value = EnumType.STRING)
-    private Department department;
-
-    @Enumerated(value = EnumType.STRING)
-    private Faculty faculty;
+//    @Enumerated(value = EnumType.STRING)
+//    private Department department;
+//
+//    @Enumerated(value = EnumType.STRING)
+//    private Faculty faculty;
 
     private String clock;
     private String day;

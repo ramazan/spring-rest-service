@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.Enumerated;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -50,10 +52,12 @@ public class LessonController
     }
 
     @GetMapping("/lessons")
-    private List<Lesson> getLessonsByAcademician()
+    private HashMap<String, List<Lesson>> getLessonsByAcademician()
     {
+        HashMap<String, List<Lesson>> returnMap = new HashMap<>();
         List<Lesson> lessons = lessonRepository.findAll();
-        return lessons;
+        returnMap.put("lessons", lessons);
+        return returnMap;
     }
 
     @GetMapping("/lessons/{department}/department")
