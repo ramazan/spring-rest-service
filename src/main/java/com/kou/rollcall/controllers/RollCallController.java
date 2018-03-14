@@ -74,7 +74,7 @@ public class RollCallController
     }
 
 
-    @GetMapping(value = "/rollcall/getRollCallInfo")
+    @GetMapping(value = "/rollcall/RollCallInfo")
     private ResponseEntity<HashMap> getRollCallInfo(@PathParam("studentId") String studentId)
     {
         HashMap<String, List> rollcallMap = new HashMap<>();
