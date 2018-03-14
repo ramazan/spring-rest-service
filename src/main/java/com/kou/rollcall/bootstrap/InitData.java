@@ -4,9 +4,11 @@ import com.kou.rollcall.model.Academician;
 import com.kou.rollcall.model.Department;
 import com.kou.rollcall.model.Faculty;
 import com.kou.rollcall.model.Lesson;
+import com.kou.rollcall.model.RollCall;
 import com.kou.rollcall.model.Student;
 import com.kou.rollcall.repositories.AcademicianRepository;
 import com.kou.rollcall.repositories.LessonRepository;
+import com.kou.rollcall.repositories.RollCallRepository;
 import com.kou.rollcall.repositories.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -28,14 +29,14 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
             "Yazılım Mühendisliği", "Linux Ağ Yönetimi", "Programlama I"
             , "Yazılım Proje Yönetimi", "Kontrol Sistemleri", "Sayısal Veri İletişimi", "Robotik Sistemler"));
 
-    public  List<String> days =  new ArrayList<>(Arrays.asList("Pazartesi","Salı","Çarşamba","Perşembe","Cuma"));
+    public List<String> days = new ArrayList<>(Arrays.asList("Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma"));
 
-    public  List<String> location =  new ArrayList<>(Arrays.asList("305","303","Amfi-B","Amfi-A","301"));
+    public List<String> location = new ArrayList<>(Arrays.asList("305", "303", "Amfi-B", "Amfi-A", "301"));
 
-    public  List<String> clock =  new ArrayList<>(Arrays.asList("10:30","09:00","14:00","19:45","13:30"));
+    public List<String> clock = new ArrayList<>(Arrays.asList("10:30", "09:00", "14:00", "19:45", "13:30"));
 
-    public List<Faculty> facultyList =  new ArrayList<>(Arrays.asList(Faculty.Mühendislik,Faculty.Mühendislik,Faculty.Mühendislik));
-    public List<Department> departmentList =  new ArrayList<>(Arrays.asList(Department.Bilgisiyar_Mühendisliği,Department.Makine_Mühendisliği,Department.Endüstri_Mühendisliği));
+    public List<Faculty> facultyList = new ArrayList<>(Arrays.asList(Faculty.Mühendislik, Faculty.Mühendislik, Faculty.Mühendislik));
+    public List<Department> departmentList = new ArrayList<>(Arrays.asList(Department.Bilgisiyar_Mühendisliği, Department.Makine_Mühendisliği, Department.Endüstri_Mühendisliği));
 
     @Autowired
     private AcademicianRepository academicianRepository;
@@ -45,6 +46,9 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private RollCallRepository rollCallRepository;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent)
@@ -90,6 +94,61 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
         academicianRepository.findAll().forEach(System.out::println);
         System.out.println("------------------------");
         studentRepository.findAll().forEach(System.out::println);
+
+        RollCall rollCall = new RollCall();
+        rollCall.setBeaconId("AZ1231CVDFG");
+        rollCall.setLesson(lessonRepository.findOne(1L));
+        rollCall.setStudent(Student);
+
+        RollCall rollCall1 = new RollCall();
+        rollCall1.setBeaconId("AZ1231CVDFG");
+        rollCall1.setLesson(lessonRepository.findOne(1L));
+        rollCall1.setStudent(Student1);
+
+        RollCall rollCall2 = new RollCall();
+        rollCall2.setBeaconId("AZ1231CVDFG");
+        rollCall2.setLesson(lessonRepository.findOne(1L));
+        rollCall2.setStudent(Student2);
+
+        RollCall rollCall6 = new RollCall();
+        rollCall6.setBeaconId("AZ1231CVDFG");
+        rollCall6.setLesson(lessonRepository.findOne(1L));
+        rollCall6.setStudent(Student);
+
+        RollCall rollCall7 = new RollCall();
+        rollCall7.setBeaconId("AZ1231CVDFG");
+        rollCall7.setLesson(lessonRepository.findOne(1L));
+        rollCall7.setStudent(Student1);
+
+        RollCall rollCall8 = new RollCall();
+        rollCall8.setBeaconId("AZ1231CVDFG");
+        rollCall8.setLesson(lessonRepository.findOne(1L));
+        rollCall8.setStudent(Student2);
+
+        RollCall rollCall3 = new RollCall();
+        rollCall3.setBeaconId("29RD57SV");
+        rollCall3.setLesson(lessonRepository.findOne(2L));
+        rollCall3.setStudent(Student);
+
+        RollCall rollCall4 = new RollCall();
+        rollCall4.setBeaconId("29RD57SV");
+        rollCall4.setLesson(lessonRepository.findOne(2L));
+        rollCall4.setStudent(Student1);
+
+        RollCall rollCall5 = new RollCall();
+        rollCall5.setBeaconId("29RD57SV");
+        rollCall5.setLesson(lessonRepository.findOne(2L));
+        rollCall5.setStudent(Student2);
+
+        rollCallRepository.save(rollCall8);
+        rollCallRepository.save(rollCall7);
+        rollCallRepository.save(rollCall6);
+        rollCallRepository.save(rollCall5);
+        rollCallRepository.save(rollCall4);
+        rollCallRepository.save(rollCall3);
+        rollCallRepository.save(rollCall2);
+        rollCallRepository.save(rollCall1);
+        rollCallRepository.save(rollCall);
 
     }
 }
