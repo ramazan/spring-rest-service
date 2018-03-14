@@ -11,10 +11,8 @@ public interface StudentRepository extends CrudRepository<Student, Long>, JpaRep
 {
     Student getStudentByName(String name);
 
-    Set<Student> getAllBy();
-
     List<Student> getStudentsByLessons(String lessonName);
 
-    Student getStudentByNumberAndPassword(Long number,String password);
+    Student getStudentByNumberAndPassword(Long number, String password);
 
 }
