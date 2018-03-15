@@ -1,12 +1,14 @@
 package com.kou.rollcall.bootstrap;
 
 import com.kou.rollcall.model.Academician;
+import com.kou.rollcall.model.Announcement;
 import com.kou.rollcall.model.Department;
 import com.kou.rollcall.model.Faculty;
 import com.kou.rollcall.model.Lesson;
 import com.kou.rollcall.model.RollCall;
 import com.kou.rollcall.model.Student;
 import com.kou.rollcall.repositories.AcademicianRepository;
+import com.kou.rollcall.repositories.AnnouncementRepository;
 import com.kou.rollcall.repositories.LessonRepository;
 import com.kou.rollcall.repositories.RollCallRepository;
 import com.kou.rollcall.repositories.StudentRepository;
@@ -49,6 +51,9 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
 
     @Autowired
     private RollCallRepository rollCallRepository;
+
+    @Autowired
+    private AnnouncementRepository announcementRepository;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent)
@@ -149,6 +154,22 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
         rollCallRepository.save(rollCall2);
         rollCallRepository.save(rollCall1);
         rollCallRepository.save(rollCall);
+
+        Announcement announcement = new Announcement();
+        announcement.setAcademician(academician);
+        Lesson lesson = lessonRepository.getLessonByAcademician_Username(academician.getUsername()).get(0);
+        announcement.setLesson(lesson);
+        announcement.setTitle(lesson.getName() + " Hakkında");
+        announcement.setContent(lesson.getName() + " Sunumları 28 Nisan Çarşamba günü 303 nolu sınıfta alınacaktır. Teşekkürler!");
+        announcementRepository.save(announcement);
+
+        Announcement announcement1 = new Announcement();
+        announcement1.setAcademician(academician1);
+        Lesson lesson1 = lessonRepository.getLessonByAcademician_Username(academician1.getUsername()).get(0);
+        announcement1.setLesson(lesson1);
+        announcement1.setTitle(lesson1.getName() + " Dersi ");
+        announcement1.setContent(lesson1.getName() + "  asdhkashdgalsdj gasjhd ahj gdahj ghjsdg asjhdg asjhg das shdgalınacaktır. Teşekkürler!");
+        announcementRepository.save(announcement1);
 
     }
 }
