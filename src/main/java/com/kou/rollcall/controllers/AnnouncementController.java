@@ -2,6 +2,7 @@ package com.kou.rollcall.controllers;
 
 import com.kou.rollcall.model.Announcement;
 import com.kou.rollcall.model.Lesson;
+import com.kou.rollcall.repositories.AcademicianRepository;
 import com.kou.rollcall.repositories.AnnouncementRepository;
 import com.kou.rollcall.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class AnnouncementController
     @Autowired
     private AnnouncementRepository announcementRepository;
 
+    @Autowired
+    private AcademicianRepository academicianRepository;
+
     @PostMapping
     private ResponseEntity<Object> saveAnnouncement(@RequestBody Announcement announcement)
     {
@@ -51,12 +55,28 @@ public class AnnouncementController
     @GetMapping("/student")
     private ResponseEntity<Object> studentAnnouncement(@PathParam("stundentId") String studentId)
     {
+        return getAnnouncementByLessonId(studentId, true);
+    }
+
+    @GetMapping("/academician")
+    private ResponseEntity<Object> academicianAnnouncement(@PathParam("academicianId") String academicianId)
+    {
+        return getAnnouncementByLessonId(academicianId, false);
+    }
+
+
+    private ResponseEntity<Object> getAnnouncementByLessonId(String id, boolean isStudent)
+    {
         HashMap<String, List<Announcement>> announcement = new HashMap<>();
         List<Announcement> announcementList = new ArrayList<>();
+        Set<Lesson> lessons;
 
         try
         {
-            Set<Lesson> lessons = studentRepository.findOne(Long.valueOf(studentId)).getLessons();
+            if (isStudent)
+                lessons = studentRepository.findOne(Long.valueOf(id)).getLessons();
+            else
+                lessons = academicianRepository.findOne(Long.valueOf(id)).getLessons();
 
             for (Lesson lesson : lessons)
             {
@@ -84,6 +104,7 @@ public class AnnouncementController
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
     }
+
 
     @GetMapping
     private ResponseEntity<Object> allAnnouncement()

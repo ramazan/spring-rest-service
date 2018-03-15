@@ -59,9 +59,9 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent)
     {
 
-        Academician academician = academicianRepository.getAcademicianByName("Yrd.Doç.Dr.Pınar");
-        Academician academician1 = academicianRepository.getAcademicianByName("Doç.Dr.Ahmet");
-        Academician academician2 = academicianRepository.getAcademicianByName("Yrd.Doç.Dr.Burak");
+        Academician academician = academicianRepository.getAcademicianByUsername("ponaydurdu");
+        Academician academician1 = academicianRepository.getAcademicianByUsername("asayar");
+        Academician academician2 = academicianRepository.getAcademicianByUsername("binner");
 
         Student Student = studentRepository.getStudentByName("Ramazan");
         Student Student1 = studentRepository.getStudentByName("Umut");
