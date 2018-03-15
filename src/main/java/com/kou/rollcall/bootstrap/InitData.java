@@ -13,6 +13,7 @@ import com.kou.rollcall.repositories.LessonRepository;
 import com.kou.rollcall.repositories.RollCallRepository;
 import com.kou.rollcall.repositories.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -155,21 +156,19 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
         rollCallRepository.save(rollCall1);
         rollCallRepository.save(rollCall);
 
-        Announcement announcement = new Announcement();
-        announcement.setAcademician(academician);
-        Lesson lesson = lessonRepository.getLessonByAcademician_Username(academician.getUsername()).get(0);
-        announcement.setLesson(lesson);
-        announcement.setTitle(lesson.getName() + " Hakkında");
-        announcement.setContent(lesson.getName() + " Sunumları 28 Nisan Çarşamba günü 303 nolu sınıfta alınacaktır. Teşekkürler!");
-        announcementRepository.save(announcement);
 
-        Announcement announcement1 = new Announcement();
-        announcement1.setAcademician(academician1);
-        Lesson lesson1 = lessonRepository.getLessonByAcademician_Username(academician1.getUsername()).get(0);
-        announcement1.setLesson(lesson1);
-        announcement1.setTitle(lesson1.getName() + " Dersi ");
-        announcement1.setContent(lesson1.getName() + "  asdhkashdgalsdj gasjhd ahj gdahj ghjsdg asjhdg asjhg das shdgalınacaktır. Teşekkürler!");
-        announcementRepository.save(announcement1);
+        for (int i = 0; i < 10; i++)
+        {
+            int rnd = rand.nextInt(3);
+            Announcement announcement = new Announcement();
+            Academician academician3 = academicianList.get(rnd);
+            announcement.setAcademician(academician3);
+            Lesson lesson = lessonRepository.getLessonByAcademician_Username(academician3.getUsername()).get(0);
+            announcement.setLesson(lesson);
+            announcement.setTitle(lesson.getName() + " " + RandomStringUtils.random(12, true, true));
+            announcement.setContent(lesson.getName() + " Dersi için açıklama " + RandomStringUtils.random(42, true, true));
+            announcementRepository.save(announcement);
+        }
 
     }
 }
