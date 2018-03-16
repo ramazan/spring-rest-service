@@ -65,6 +65,37 @@ public class AnnouncementController
     }
 
 
+    @GetMapping
+    private ResponseEntity<Object> allAnnouncement()
+    {
+        try
+        {
+            return new ResponseEntity<>(announcementRepository.findAll(), HttpStatus.OK);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(value = "/delete")
+    private ResponseEntity<Object> delete(@PathParam("announcementId") String announcementId)
+    {
+        try
+        {
+            announcementRepository.delete(Long.valueOf(announcementId));
+            return new ResponseEntity<>(true, HttpStatus.OK);
+
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+
+        }
+
+    }
+
     private ResponseEntity<Object> getAnnouncementByLessonId(String id, boolean isStudent)
     {
         HashMap<String, List<Announcement>> announcement = new HashMap<>();
@@ -105,19 +136,5 @@ public class AnnouncementController
         }
     }
 
-
-    @GetMapping
-    private ResponseEntity<Object> allAnnouncement()
-    {
-        try
-        {
-            return new ResponseEntity<>(announcementRepository.findAll(), HttpStatus.OK);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            return new ResponseEntity<>(false, HttpStatus.OK);
-        }
-    }
 
 }
