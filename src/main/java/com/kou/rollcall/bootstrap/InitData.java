@@ -163,6 +163,7 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
             Academician academician3 = academicianList.get(rnd);
             announcement.setAcademician(academician3);
             Lesson lesson = null;
+
             int rnd_time = rand.nextInt(5);
 
             try
