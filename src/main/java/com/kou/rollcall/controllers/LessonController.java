@@ -5,15 +5,20 @@ import com.kou.rollcall.model.Lesson;
 import com.kou.rollcall.model.Student;
 import com.kou.rollcall.repositories.AcademicianRepository;
 import com.kou.rollcall.repositories.LessonRepository;
+import com.kou.rollcall.repositories.StudentRepository;
 import com.kou.rollcall.services.LessonServiceImpl;
-import com.kou.rollcall.services.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.server.PathParam;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +33,7 @@ public class LessonController
     private LessonRepository lessonRepository;
 
     @Autowired
-    private StudentService studentService;
+    private StudentRepository studentRepository;
 
     @Autowired
     private AcademicianRepository academicianRepository;
@@ -73,7 +78,43 @@ public class LessonController
         return lesson.getStudents();
     }
 
-//    @PostMapping(value = "/saveBook")
+    @PostMapping(value = "/lesson/saveStudent")
+    private ResponseEntity<Object> saveBook(@RequestBody Student student, @PathParam("lessonId") Long lessonId)
+    {
+        Lesson lesson = lessonRepository.findOne(lessonId);
+
+        Student studentByNumber = studentRepository.getStudentByNumber(student.getNumber());
+
+        if (studentByNumber != null)
+        {
+            if (!lesson.getStudents().contains(studentByNumber))
+            {
+                lesson.getStudents().add(studentByNumber);
+                lessonRepository.save(lesson);
+
+                return new ResponseEntity<Object>(true, HttpStatus.OK);
+            }
+
+            return new ResponseEntity<Object>("öğrenci zaten kayıtlı!", HttpStatus.OK);
+        }
+        else
+        {
+            student.setPassword(student.getNumber().toString());
+            studentRepository.save(student);
+
+            studentByNumber = studentRepository.getStudentByNumber(student.getNumber());
+
+            lesson.getStudents().add(studentByNumber);
+            lessonRepository.save(lesson);
+
+            return new ResponseEntity<Object>(true, HttpStatus.OK);
+        }
+
+
+    }
+
+
+//    @PostMapping(value = "/saveStudent")
 //    private ResponseEntity<Book> saveBook(@RequestBody Book book)
 //    {
 //        bookRepository.save(book);
