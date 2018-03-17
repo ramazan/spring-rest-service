@@ -4,6 +4,7 @@ import com.kou.rollcall.model.Announcement;
 import com.kou.rollcall.model.Lesson;
 import com.kou.rollcall.repositories.AcademicianRepository;
 import com.kou.rollcall.repositories.AnnouncementRepository;
+import com.kou.rollcall.repositories.LessonRepository;
 import com.kou.rollcall.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,9 @@ public class AnnouncementController
 
     @Autowired
     private AcademicianRepository academicianRepository;
+
+    @Autowired
+    private LessonRepository lessonRepository;
 
     @PostMapping
     private ResponseEntity<Object> saveAnnouncement(@RequestBody Announcement announcement)
@@ -86,6 +90,28 @@ public class AnnouncementController
         {
             announcementRepository.delete(Long.valueOf(announcementId));
             return new ResponseEntity<>(true, HttpStatus.OK);
+
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+
+        }
+
+    }
+
+    @PostMapping(value = "/update")
+    private ResponseEntity<Object> update(@RequestBody Announcement announcement)
+    {
+        try
+        {
+            Announcement announcement1 = announcementRepository.findOne(announcement.getId());
+            announcement1.setContent(announcement.getContent());
+            announcement1.setTitle(announcement.getTitle());
+            announcement1.setLesson(lessonRepository.findOne(announcement.getLesson().getId()));
+            announcementRepository.save(announcement1);
+
+            return new ResponseEntity<>(announcement1, HttpStatus.OK);
 
         }
         catch (Exception e)
