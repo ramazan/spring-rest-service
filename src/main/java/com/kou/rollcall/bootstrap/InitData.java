@@ -165,8 +165,12 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
             announcement.setAcademician(academician3);
             Lesson lesson = lessonRepository.getLessonByAcademician_Username(academician3.getUsername()).get(0);
             announcement.setLesson(lesson);
-            announcement.setTitle(lesson.getName() + " " + RandomStringUtils.random(12, true, true));
-            announcement.setContent(lesson.getName() + " Dersi için açıklama " + RandomStringUtils.random(42, true, true));
+//            announcement.setTitle(lesson.getName() + " " + RandomStringUtils.random(12, true, true));
+//            announcement.setContent(lesson.getName() + " Dersi için açıklama " + RandomStringUtils.random(42, true, true));
+            announcement.setTitle(lesson.getName() + " Dersi Hakkında ");
+            announcement.setContent(lesson.getName() + " Dersi için açıklama \n" + lesson.getName() + " Dersi "
+                                    + days.get(rnd) + " Günü Saat : "
+                                    + clock.get(rnd) + " 'da  " + location.get(rnd) +" Sınıfında yapılacaktır.");
             announcementRepository.save(announcement);
         }
 
