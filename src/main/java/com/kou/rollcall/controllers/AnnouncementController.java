@@ -111,7 +111,7 @@ public class AnnouncementController
             announcement1.setLesson(lessonRepository.findOne(announcement.getLesson().getId()));
             announcementRepository.save(announcement1);
 
-            return new ResponseEntity<>(announcement1, HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
 
         }
         catch (Exception e)
