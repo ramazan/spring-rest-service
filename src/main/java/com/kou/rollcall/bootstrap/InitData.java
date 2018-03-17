@@ -13,7 +13,6 @@ import com.kou.rollcall.repositories.LessonRepository;
 import com.kou.rollcall.repositories.RollCallRepository;
 import com.kou.rollcall.repositories.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -157,20 +156,43 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
         rollCallRepository.save(rollCall);
 
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 15; i++)
         {
             int rnd = rand.nextInt(3);
             Announcement announcement = new Announcement();
             Academician academician3 = academicianList.get(rnd);
             announcement.setAcademician(academician3);
-            Lesson lesson = lessonRepository.getLessonByAcademician_Username(academician3.getUsername()).get(0);
+            Lesson lesson = null;
+            int rnd_time = rand.nextInt(5);
+
+            try
+            {
+                lesson = lessonRepository.getLessonByAcademician_Username(academician3.getUsername()).get(rnd_time);
+            }
+            catch (Exception e)
+            {
+                log.warn("Hata!");
+                lesson = lessonRepository.getLessonByAcademician_Username(academician3.getUsername()).get(0);
+            }
+
             announcement.setLesson(lesson);
 //            announcement.setTitle(lesson.getName() + " " + RandomStringUtils.random(12, true, true));
 //            announcement.setContent(lesson.getName() + " Dersi için açıklama " + RandomStringUtils.random(42, true, true));
-            announcement.setTitle(lesson.getName() + " Dersi Hakkında ");
-            announcement.setContent(lesson.getName() + " Dersi için açıklama \n" + lesson.getName() + " Dersi "
-                                    + days.get(rnd) + " Günü Saat : "
-                                    + clock.get(rnd) + " 'da  " + location.get(rnd) +" Sınıfında yapılacaktır.");
+
+            if (rnd_time < 3)
+            {
+                announcement.setTitle(lesson.getName() + " Dersi Hakkında ");
+                announcement.setContent("Bu hafta ders yapılmayacaktır.!!");
+            }
+            else
+            {
+
+                announcement.setTitle("Ders Saati Değişikliği");
+                announcement.setContent(lesson.getName() + " Dersi "
+                        + days.get(rnd_time) + " Günü Saat : "
+                        + clock.get(rnd_time) + " 'da  " + location.get(rnd_time) + " Sınıfında yapılacaktır.");
+            }
+
             announcementRepository.save(announcement);
         }
 
