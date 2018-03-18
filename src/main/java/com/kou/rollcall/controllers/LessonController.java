@@ -6,7 +6,6 @@ import com.kou.rollcall.model.RollCall;
 import com.kou.rollcall.model.RollCallInfo;
 import com.kou.rollcall.model.Student;
 import com.kou.rollcall.model.StudentRollCall;
-import com.kou.rollcall.repositories.AcademicianRepository;
 import com.kou.rollcall.repositories.LessonRepository;
 import com.kou.rollcall.repositories.RollCallRepository;
 import com.kou.rollcall.repositories.StudentRepository;
@@ -144,15 +143,18 @@ public class LessonController
                 studentRollCall.setDevamsizlik(rollCallInfo);
                 rollCallInfoList.add(studentRollCall);
             }
-            else
-            {
-                return new ResponseEntity<Object>("false", HttpStatus.OK);
-            }
         }
 
-        rollcallMap.put("ogrenci_devam_bilgileri", rollCallInfoList);
+        if (rollCallInfoList.size() != 0)
+        {
+            rollcallMap.put("ogrenci_devam_bilgileri", rollCallInfoList);
 
-        return new ResponseEntity<Object>(rollcallMap, HttpStatus.OK);
+            return new ResponseEntity<Object>(rollcallMap, HttpStatus.OK);
+        }
+        else // eğer hiç devamsızlık bilgisi yoksa
+        {
+            return new ResponseEntity<Object>("false", HttpStatus.OK);
+        }
     }
 
 

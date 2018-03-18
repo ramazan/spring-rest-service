@@ -145,6 +145,55 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
         rollCall5.setLesson(lessonRepository.findOne(2L));
         rollCall5.setStudent(Student2);
 
+        RollCall rollCall9 = new RollCall();
+        rollCall9.setBeaconId("AZ1231CVDFG");
+        rollCall9.setLesson(lessonRepository.findOne(3L));
+        rollCall9.setStudent(Student1);
+
+        RollCall rollCall10 = new RollCall();
+        rollCall10.setBeaconId("AZ1231CVDFG");
+        rollCall10.setLesson(lessonRepository.findOne(4L));
+        rollCall10.setStudent(Student2);
+
+        RollCall rollCall11 = new RollCall();
+        rollCall11.setBeaconId("29RD57SV");
+        rollCall11.setLesson(lessonRepository.findOne(5L));
+        rollCall11.setStudent(Student);
+
+        RollCall rollCall12 = new RollCall();
+        rollCall12.setBeaconId("29RD57SV");
+        rollCall12.setLesson(lessonRepository.findOne(6L));
+        rollCall12.setStudent(Student1);
+
+        RollCall rollCall13 = new RollCall();
+        rollCall13.setBeaconId("29RD57SV");
+        rollCall13.setLesson(lessonRepository.findOne(7L));
+        rollCall13.setStudent(Student2);
+
+        RollCall rollCall14 = new RollCall();
+        rollCall14.setBeaconId("29RD57SV");
+        rollCall14.setLesson(lessonRepository.findOne(8L));
+        rollCall14.setStudent(Student);
+
+        RollCall rollCall15 = new RollCall();
+        rollCall15.setBeaconId("29RD57SV");
+        rollCall15.setLesson(lessonRepository.findOne(9L));
+        rollCall15.setStudent(Student1);
+
+        RollCall rollCall16 = new RollCall();
+        rollCall16.setBeaconId("29RD57SV");
+        rollCall16.setLesson(lessonRepository.findOne(10L));
+        rollCall16.setStudent(Student);
+
+
+        rollCallRepository.save(rollCall16);
+        rollCallRepository.save(rollCall15);
+        rollCallRepository.save(rollCall14);
+        rollCallRepository.save(rollCall13);
+        rollCallRepository.save(rollCall12);
+        rollCallRepository.save(rollCall11);
+        rollCallRepository.save(rollCall10);
+        rollCallRepository.save(rollCall9);
         rollCallRepository.save(rollCall8);
         rollCallRepository.save(rollCall7);
         rollCallRepository.save(rollCall6);
@@ -154,7 +203,6 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
         rollCallRepository.save(rollCall2);
         rollCallRepository.save(rollCall1);
         rollCallRepository.save(rollCall);
-
 
         for (int i = 0; i < 15; i++)
         {
