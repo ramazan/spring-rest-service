@@ -25,7 +25,7 @@ import java.util.Set;
 @RequestMapping("/api")
 public class RollCallController
 {
-    private final static int WEEK = 17;
+    private final static int WEEK = 14;
 
     @Autowired
     private RollCallRepository rollCallRepository;

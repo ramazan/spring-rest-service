@@ -33,7 +33,7 @@ import java.util.Set;
 public class LessonController
 {
 
-    private final static int WEEK = 17;
+    private final static int WEEK = 14;
 
     @Autowired
     private LessonRepository lessonRepository;
