@@ -31,7 +31,7 @@ public class InitData implements ApplicationListener<ContextRefreshedEvent>
             "Yazılım Mühendisliği", "Linux Ağ Yönetimi", "Programlama I"
             , "Yazılım Proje Yönetimi", "Kontrol Sistemleri", "Sayısal Veri İletişimi", "Robotik Sistemler"));
 
-    public List<String> days = new ArrayList<>(Arrays.asList("Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma"));
+    public List<String> days = new ArrayList<>(Arrays.asList("Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma","Pazar"));
 
     public List<String> location = new ArrayList<>(Arrays.asList("305", "303", "Amfi-B", "Amfi-A", "301"));
 
