@@ -2,9 +2,13 @@ package com.kou.rollcall.controllers;
 
 import com.kou.rollcall.model.Department;
 import com.kou.rollcall.model.Lesson;
+import com.kou.rollcall.model.RollCall;
+import com.kou.rollcall.model.RollCallInfo;
 import com.kou.rollcall.model.Student;
+import com.kou.rollcall.model.StudentRollCall;
 import com.kou.rollcall.repositories.AcademicianRepository;
 import com.kou.rollcall.repositories.LessonRepository;
+import com.kou.rollcall.repositories.RollCallRepository;
 import com.kou.rollcall.repositories.StudentRepository;
 import com.kou.rollcall.services.LessonServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +34,8 @@ import java.util.Set;
 public class LessonController
 {
 
+    private final static int WEEK = 17;
+
     @Autowired
     private LessonRepository lessonRepository;
 
@@ -36,7 +43,7 @@ public class LessonController
     private StudentRepository studentRepository;
 
     @Autowired
-    private AcademicianRepository academicianRepository;
+    private RollCallRepository rollCallRepository;
 
     @Autowired
     private LessonServiceImpl lessonService;
@@ -109,8 +116,43 @@ public class LessonController
 
             return new ResponseEntity<Object>(true, HttpStatus.OK);
         }
+    }
 
+    @GetMapping("/lesson/rollcall")
+    private ResponseEntity<Object> getStudentsRollCallByLessonId(@PathParam("lessonId") Long lessonId)
+    {
+        Lesson lesson = lessonRepository.getLessonById(lessonId);
+        List<Student> studentList = new ArrayList<>(lesson.getStudents());
 
+        HashMap<String, List> rollcallMap = new HashMap<>();
+        List<StudentRollCall> rollCallInfoList = new ArrayList<>();
+
+        for (Student student : studentList)
+        {
+            List<RollCall> rollCall = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(student.getId(), lessonId);
+            StudentRollCall studentRollCall = new StudentRollCall();
+
+            if (rollCall.size() != 0)
+            {
+                studentRollCall.setOgrenci(rollCall.get(0).getStudent());
+
+                RollCallInfo rollCallInfo = new RollCallInfo();
+                rollCallInfo.setDersAdi(lesson.getName());
+                rollCallInfo.setDevamBilgisi(rollCall.size());
+                rollCallInfo.setDevamsizlikBilgisi(WEEK - rollCall.size());
+
+                studentRollCall.setDevamsizlik(rollCallInfo);
+                rollCallInfoList.add(studentRollCall);
+            }
+            else
+            {
+                return new ResponseEntity<Object>("false", HttpStatus.OK);
+            }
+        }
+
+        rollcallMap.put("ogrenci_devam_bilgileri", rollCallInfoList);
+
+        return new ResponseEntity<Object>(rollcallMap, HttpStatus.OK);
     }
 
 

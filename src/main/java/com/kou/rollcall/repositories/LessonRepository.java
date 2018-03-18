@@ -20,5 +20,7 @@ public interface LessonRepository extends CrudRepository<Lesson, Long>, JpaRepos
 
     Lesson getLessonByName(String name);
 
+    Lesson getLessonById(Long id);
+
 
 }

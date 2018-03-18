@@ -25,6 +25,8 @@ import java.util.Set;
 @RequestMapping("/api")
 public class RollCallController
 {
+    private final static int WEEK = 17;
+
     @Autowired
     private RollCallRepository rollCallRepository;
 
@@ -87,7 +89,7 @@ public class RollCallController
             RollCallInfo rollCallInfo = new RollCallInfo();
             rollCallInfo.setDersAdi(lesson.getName());
             rollCallInfo.setDevamBilgisi(yoklama.size());
-            rollCallInfo.setDevamsizlikBilgisi(17 - yoklama.size());
+            rollCallInfo.setDevamsizlikBilgisi(WEEK - yoklama.size());
             rollCallInfoList.add(rollCallInfo);
         }
 
