@@ -85,7 +85,7 @@ public class LessonController
     }
 
     @PostMapping(value = "/lesson/saveStudent")
-    private ResponseEntity<Object> saveBook(@RequestBody Student student, @PathParam("lessonId") Long lessonId)
+    private ResponseEntity<Object> saveStudent(@RequestBody Student student, @PathParam("lessonId") Long lessonId)
     {
         Lesson lesson = lessonRepository.findOne(lessonId);
 

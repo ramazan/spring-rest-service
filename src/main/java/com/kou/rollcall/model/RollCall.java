@@ -2,12 +2,14 @@ package com.kou.rollcall.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -24,4 +26,7 @@ public class RollCall
     @OneToOne
     @JsonIgnoreProperties(value = "academician")
     private Lesson lesson;
+
+    @CreationTimestamp
+    private Date date;
 }
