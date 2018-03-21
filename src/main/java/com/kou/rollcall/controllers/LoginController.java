@@ -74,4 +74,37 @@ public class LoginController
 
         return new ResponseEntity<>(returnMap, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/login/changePassword")
+    private ResponseEntity<Object> changePassword(@PathParam("username") String username, @PathParam("password") String password,
+                                                  @PathParam("newPassword") String newPassword)
+    {
+
+        if (username.matches("[0-9]+") && username.length() > 2)
+        {
+            Student student = studentRepository.getStudentByNumberAndPassword(Long.valueOf(username), password);
+
+            if (student != null)
+            {
+                student.setPassword(newPassword);
+                studentRepository.save(student);
+                return new ResponseEntity<>(true, HttpStatus.OK);
+
+            }
+        }
+        else
+        {
+            Academician academician = academicianRepository.getAcademicianByUsernameAndPassword(username, password);
+
+            if (academician != null)
+            {
+                academician.setPassword(newPassword);
+                academicianRepository.save(academician);
+
+                return new ResponseEntity<>(true, HttpStatus.OK);
+
+            }
+        }
+        return new ResponseEntity<>(false, HttpStatus.OK);
+    }
 }
