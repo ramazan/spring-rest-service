@@ -1,4 +1,4 @@
-
+ALTER DATABASE u7532198_kou CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 INSERT INTO academician (name, surname, username,department,faculty,password) VALUES ('Yrd.Doç.Dr.Pınar', 'Onay Durdu', 'ponaydurdu','Endüstri_Mühendisliği','Mühendislik','1');
 INSERT INTO academician (name, surname, username,department,faculty,password) VALUES ('Yrd.Doç.Dr.Burak', 'Inner', 'binner','Makine_Mühendisliği','Mühendislik','1');
