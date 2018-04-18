@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +44,15 @@ public class RollCallController
                                                 @PathParam("studentId") String studentId,
                                                 @PathParam("beaconId") String beaconId)
     {
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        List<RollCall> yoklama = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(Long.valueOf(studentId), Long.valueOf(lessonId));
+
+        for (RollCall rolcall: yoklama)
+        {
+            if (rolcall.getDate().toString().equals(timeStamp))
+                  return new ResponseEntity<>("Bu hafta için yoklaman bu derse zaten kaydedildi!", HttpStatus.OK);
+        }
+
         Set<Lesson> lessons = studentRepository.findOne(studentRepository.findOne(Long.valueOf(studentId)).getId()).getLessons();
         Lesson lesson = lessonRepository.getLessonById(Long.valueOf(lessonId));
 
