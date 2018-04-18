@@ -41,23 +41,33 @@ public class RollCallController
                                                 @PathParam("studentId") String studentId,
                                                 @PathParam("beaconId") String beaconId)
     {
+        Set<Lesson> lessons = studentRepository.findOne(studentRepository.findOne(Long.valueOf(studentId)).getId()).getLessons();
+        Lesson lesson = lessonRepository.getLessonById(Long.valueOf(lessonId));
 
-        try
+        if (lessons.contains(lesson))
         {
-            RollCall rollCall = new RollCall();
+            try
+            {
+                RollCall rollCall = new RollCall();
 
-            rollCall.setStudent(studentRepository.findOne(Long.valueOf(studentId)));
-            rollCall.setLesson(lessonRepository.findOne(Long.valueOf(lessonId)));
-            rollCall.setBeaconId(beaconId);
+                rollCall.setStudent(studentRepository.findOne(Long.valueOf(studentId)));
+                rollCall.setLesson(lessonRepository.findOne(Long.valueOf(lessonId)));
+                rollCall.setBeaconId(beaconId);
 
-            rollCallRepository.save(rollCall);
-            return new ResponseEntity<>(true, HttpStatus.OK);
+                rollCallRepository.save(rollCall);
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            }
+            catch (NumberFormatException e)
+            {
+                e.printStackTrace();
+                return new ResponseEntity<>(false, HttpStatus.OK);
+            }
         }
-        catch (NumberFormatException e)
+        else
         {
-            e.printStackTrace();
-            return new ResponseEntity<>(false, HttpStatus.OK);
+            return new ResponseEntity<>("Öğrenci derse kayıtlı değil!", HttpStatus.OK);
         }
+
     }
 
 
