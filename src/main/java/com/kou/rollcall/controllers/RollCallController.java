@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -47,10 +46,10 @@ public class RollCallController
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         List<RollCall> yoklama = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(Long.valueOf(studentId), Long.valueOf(lessonId));
 
-        for (RollCall rolcall: yoklama)
+        for (RollCall rolcall : yoklama)
         {
             if (rolcall.getDate().toString().equals(timeStamp))
-                  return new ResponseEntity<>("Bu hafta için yoklaman bu derse zaten kaydedildi!", HttpStatus.OK);
+                return new ResponseEntity<>("Bu hafta için yoklaman bu derse zaten kaydedildi!", HttpStatus.OK);
         }
 
         Set<Lesson> lessons = studentRepository.findOne(studentRepository.findOne(Long.valueOf(studentId)).getId()).getLessons();
@@ -78,6 +77,36 @@ public class RollCallController
         else
         {
             return new ResponseEntity<>("Öğrenci derse kayıtlı değil!", HttpStatus.OK);
+        }
+
+    }
+
+    @PostMapping(value = "/rollcall/getRollcall")
+    private ResponseEntity<Object> getRollCallAcademician(@PathParam("lessonId") String lessonId,
+                                                          @PathParam("academicianId") String academicianId)
+    {
+        List<Lesson> lessons = lessonRepository.getLessonsByAcademician_Id(Long.valueOf(academicianId));
+        Lesson lesson = lessonRepository.getLessonById(Long.valueOf(lessonId));
+
+        if (lessons.contains(lesson))
+        {
+
+            HashMap<String, List> returnMap = new HashMap<>();
+
+            List<RollCall> yoklama = rollCallRepository.getRollCallByLessonIdAndDate(Long.valueOf(lessonId), Calendar.getInstance().getTime());
+
+            if (yoklama.size() > 0)
+            {
+                returnMap.put("data", yoklama);
+                return new ResponseEntity<>(returnMap, HttpStatus.OK);
+            }
+            else
+                return new ResponseEntity<>("Henüz yoklama bilgisi bulunmamaktadır.", HttpStatus.OK);
+
+        }
+        else
+        {
+            return new ResponseEntity<>(lesson.getName() + " isimli ders için yetkiniz bulunmamaktadır!.", HttpStatus.OK);
         }
 
     }
