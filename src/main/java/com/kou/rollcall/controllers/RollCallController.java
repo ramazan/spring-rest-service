@@ -3,6 +3,7 @@ package com.kou.rollcall.controllers;
 import com.kou.rollcall.model.Lesson;
 import com.kou.rollcall.model.RollCall;
 import com.kou.rollcall.model.RollCallInfo;
+import com.kou.rollcall.model.Student;
 import com.kou.rollcall.repositories.LessonRepository;
 import com.kou.rollcall.repositories.RollCallRepository;
 import com.kou.rollcall.repositories.StudentRepository;
@@ -22,6 +23,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/api")
@@ -43,16 +45,31 @@ public class RollCallController
                                                 @PathParam("studentId") String studentId,
                                                 @PathParam("beaconId") String beaconId)
     {
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-        List<RollCall> yoklama = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(Long.valueOf(studentId), Long.valueOf(lessonId));
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        date.setTimeZone(TimeZone.getTimeZone("Europe/Istanbul"));
+        String timeStamp = date.format(Calendar.getInstance().getTime());
+
+        Long ogrenciId;
+
+        if (studentId.length() > 3)
+        {
+            Student student = studentRepository.getStudentByNumber(Long.valueOf(studentId));
+            ogrenciId = student.getId();
+        }
+        else
+        {
+            ogrenciId = Long.valueOf(studentId);
+        }
+
+        List<RollCall> yoklama = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(ogrenciId, Long.valueOf(lessonId));
 
         for (RollCall rolcall : yoklama)
         {
             if (rolcall.getDate().toString().equals(timeStamp))
-                return new ResponseEntity<>("Bu hafta için yoklaman bu derse zaten kaydedildi!", HttpStatus.OK);
+                return new ResponseEntity<>("false", HttpStatus.OK);
         }
 
-        Set<Lesson> lessons = studentRepository.findOne(studentRepository.findOne(Long.valueOf(studentId)).getId()).getLessons();
+        Set<Lesson> lessons = studentRepository.findOne(studentRepository.findOne(ogrenciId).getId()).getLessons();
         Lesson lesson = lessonRepository.getLessonById(Long.valueOf(lessonId));
 
         if (lessons.contains(lesson))
@@ -61,7 +78,7 @@ public class RollCallController
             {
                 RollCall rollCall = new RollCall();
 
-                rollCall.setStudent(studentRepository.findOne(Long.valueOf(studentId)));
+                rollCall.setStudent(studentRepository.findOne(ogrenciId));
                 rollCall.setLesson(lessonRepository.findOne(Long.valueOf(lessonId)));
                 rollCall.setBeaconId(beaconId);
 
@@ -76,7 +93,7 @@ public class RollCallController
         }
         else
         {
-            return new ResponseEntity<>("Öğrenci derse kayıtlı değil!", HttpStatus.OK);
+            return new ResponseEntity<>("false", HttpStatus.OK);
         }
 
     }
@@ -101,7 +118,7 @@ public class RollCallController
                 return new ResponseEntity<>(returnMap, HttpStatus.OK);
             }
             else
-                return new ResponseEntity<>("Henüz yoklama bilgisi bulunmamaktadır.", HttpStatus.OK);
+                return new ResponseEntity<>("false", HttpStatus.OK);
 
         }
         else
