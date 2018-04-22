@@ -46,7 +46,7 @@ public class RollCallController
                                                 @PathParam("beaconId") String beaconId)
     {
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        date.setTimeZone(TimeZone.getTimeZone("Europe/Istanbul"));
+        date.setTimeZone(TimeZone.getTimeZone("GMT+3"));
         String timeStamp = date.format(Calendar.getInstance().getTime());
 
         Long ogrenciId;
