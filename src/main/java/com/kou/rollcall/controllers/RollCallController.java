@@ -60,14 +60,14 @@ public class RollCallController
         {
             ogrenciId = Long.valueOf(studentId);
         }
-
-        List<RollCall> yoklama = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(ogrenciId, Long.valueOf(lessonId));
-
-        for (RollCall rolcall : yoklama)
-        {
-            if (rolcall.getDate().toString().equals(timeStamp))
-                return new ResponseEntity<>("false", HttpStatus.OK);
-        }
+//
+//        List<RollCall> yoklama = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(ogrenciId, Long.valueOf(lessonId));
+//
+//        for (RollCall rolcall : yoklama)
+//        {
+//            if (rolcall.getDate().toString().equals(timeStamp))
+//                return new ResponseEntity<>("false", HttpStatus.OK);
+//        }
 
         Set<Lesson> lessons = studentRepository.findOne(studentRepository.findOne(ogrenciId).getId()).getLessons();
         Lesson lesson = lessonRepository.getLessonById(Long.valueOf(lessonId));
