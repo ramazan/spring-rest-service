@@ -78,10 +78,21 @@ public class LessonController
     }
 
     @GetMapping("/students/{name}/lessonName")
-    private Set<Student> getStudentsByLessonName(@PathVariable("name") String lessonName)
+    private ResponseEntity<Object> getStudentsByLessonName(@PathVariable("name") String lessonName)
     {
+        HashMap<String, Set> returnMap = new HashMap<>();
+
         Lesson lesson = lessonRepository.getLessonByName(lessonName);
-        return lesson.getStudents();
+
+        if (lesson != null)
+        {
+            returnMap.put("data", lesson.getStudents());
+
+            return new ResponseEntity<>(returnMap, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("false", HttpStatus.OK);
+
     }
 
     @PostMapping(value = "/lesson/saveStudent")
