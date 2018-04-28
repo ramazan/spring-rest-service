@@ -155,6 +155,7 @@ public class RollCallController
         {
             List<RollCall> yoklama = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(Long.valueOf(studentId), lesson.getId());
             RollCallInfo rollCallInfo = new RollCallInfo();
+            rollCallInfo.setDersId(lesson.getId());
             rollCallInfo.setDersAdi(lesson.getName());
             rollCallInfo.setDevamBilgisi(yoklama.size());
             rollCallInfo.setDevamsizlikBilgisi(WEEK - yoklama.size());
