@@ -1,11 +1,39 @@
 package com.kou.rollcall.model;
 
-import lombok.Data;
 
-@Data
 public class RollCallInfo
 {
     private String dersAdi;
     private int devamBilgisi;
     private int devamsizlikBilgisi;
+
+    public String getDersAdi()
+    {
+        return dersAdi;
+    }
+
+    public void setDersAdi(String dersAdi)
+    {
+        this.dersAdi = dersAdi;
+    }
+
+    public int getDevamBilgisi()
+    {
+        return devamBilgisi;
+    }
+
+    public void setDevamBilgisi(int devamBilgisi)
+    {
+        this.devamBilgisi = devamBilgisi;
+    }
+
+    public int getDevamsizlikBilgisi()
+    {
+        return devamsizlikBilgisi;
+    }
+
+    public void setDevamsizlikBilgisi(int devamsizlikBilgisi)
+    {
+        this.devamsizlikBilgisi = devamsizlikBilgisi;
+    }
 }

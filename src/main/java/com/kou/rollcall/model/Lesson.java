@@ -23,9 +23,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@EqualsAndHashCode(exclude = {"academician"})
-@ToString(exclude = {"academician", "students"})
-@Data
 public class Lesson
 {
     @Id
@@ -61,4 +58,74 @@ public class Lesson
 //            inverseJoinColumns = @JoinColumn(name = "student_id"))
 //    private Set<Student> students = new HashSet<>();
 
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public Academician getAcademician()
+    {
+        return academician;
+    }
+
+    public void setAcademician(Academician academician)
+    {
+        this.academician = academician;
+    }
+
+    public Set<Student> getStudents()
+    {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students)
+    {
+        this.students = students;
+    }
+
+    public String getClock()
+    {
+        return clock;
+    }
+
+    public void setClock(String clock)
+    {
+        this.clock = clock;
+    }
+
+    public String getDay()
+    {
+        return day;
+    }
+
+    public void setDay(String day)
+    {
+        this.day = day;
+    }
+
+    public String getLocation()
+    {
+        return location;
+    }
+
+    public void setLocation(String location)
+    {
+        this.location = location;
+    }
 }

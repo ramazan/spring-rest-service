@@ -13,7 +13,6 @@ import javax.persistence.OneToOne;
 import java.sql.Date;
 
 @Entity
-@Data
 public class RollCall
 {
     @Id
@@ -24,6 +23,7 @@ public class RollCall
     @JsonIgnore
     private String beaconId;
 
+    @JsonIgnore
     @OneToOne
     private Student student;
 
@@ -34,4 +34,54 @@ public class RollCall
 
     @CreationTimestamp
     private Date date;
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public String getBeaconId()
+    {
+        return beaconId;
+    }
+
+    public void setBeaconId(String beaconId)
+    {
+        this.beaconId = beaconId;
+    }
+
+    public Student getStudent()
+    {
+        return student;
+    }
+
+    public void setStudent(Student student)
+    {
+        this.student = student;
+    }
+
+    public Lesson getLesson()
+    {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson)
+    {
+        this.lesson = lesson;
+    }
+
+    public Date getDate()
+    {
+        return date;
+    }
+
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
 }

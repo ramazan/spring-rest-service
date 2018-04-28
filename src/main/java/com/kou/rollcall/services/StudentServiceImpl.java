@@ -18,7 +18,7 @@ public class StudentServiceImpl implements StudentService
     @Override
     public List<Student> getStudentsListByLessonName(String lessonName)
     {
-        log.info("hey i am at service layer!");
+//        log.info("hey i am at service layer!");
         List<Student> studentList = studentRepository.getStudentsByLessons(lessonName);
         return studentList;
     }

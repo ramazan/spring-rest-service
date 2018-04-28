@@ -60,14 +60,14 @@ public class RollCallController
         {
             ogrenciId = Long.valueOf(studentId);
         }
-//
-//        List<RollCall> yoklama = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(ogrenciId, Long.valueOf(lessonId));
-//
-//        for (RollCall rolcall : yoklama)
-//        {
-//            if (rolcall.getDate().toString().equals(timeStamp))
-//                return new ResponseEntity<>("false", HttpStatus.OK);
-//        }
+
+        List<RollCall> yoklama = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(ogrenciId, Long.valueOf(lessonId));
+
+        for (RollCall rolcall : yoklama)
+        {
+            if (rolcall.getDate().toString().equals(timeStamp))
+                return new ResponseEntity<>("false", HttpStatus.OK);
+        }
 
         Set<Lesson> lessons = studentRepository.findOne(studentRepository.findOne(ogrenciId).getId()).getLessons();
         Lesson lesson = lessonRepository.getLessonById(Long.valueOf(lessonId));
@@ -164,5 +164,34 @@ public class RollCallController
         rollcallMap.put("devam_bilgileri", rollCallInfoList);
 
         return new ResponseEntity<>(rollcallMap, HttpStatus.OK);
+    }
+
+
+    @PostMapping(value = "/rollcall/LessonRollCall")
+    private ResponseEntity<Object> getRollCallLesson(@PathParam("studentId") String studentId, @PathParam("lessonId") String lessonId)
+    {
+        Set<Lesson> lessons = studentRepository.findOne(studentRepository.findOne(Long.valueOf(studentId)).getId()).getLessons();
+        Lesson lesson = lessonRepository.getLessonById(Long.valueOf(lessonId));
+
+        HashMap<String, List> rollcallMap = new HashMap<>();
+
+        if (lessons.contains(lesson))
+        {
+            List<RollCall> yoklama = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(Long.valueOf(studentId), Long.valueOf(lessonId));
+
+            if (yoklama.size() > 0)
+            {
+
+                rollcallMap.put("data", yoklama);
+
+                return new ResponseEntity<>(rollcallMap, HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>("false", HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("false", HttpStatus.OK);
+        }
     }
 }
