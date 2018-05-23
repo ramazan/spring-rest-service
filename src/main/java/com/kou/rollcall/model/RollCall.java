@@ -23,7 +23,6 @@ public class RollCall
     @JsonIgnore
     private String beaconId;
 
-    @JsonIgnore
     @OneToOne
     private Student student;
 
