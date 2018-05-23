@@ -1,11 +1,14 @@
 package com.kou.rollcall.controllers;
 
+import com.kou.rollcall.model.Academician;
 import com.kou.rollcall.model.Department;
+import com.kou.rollcall.model.Faculty;
 import com.kou.rollcall.model.Lesson;
 import com.kou.rollcall.model.RollCall;
 import com.kou.rollcall.model.RollCallInfo;
 import com.kou.rollcall.model.Student;
 import com.kou.rollcall.model.StudentRollCall;
+import com.kou.rollcall.repositories.AcademicianRepository;
 import com.kou.rollcall.repositories.LessonRepository;
 import com.kou.rollcall.repositories.RollCallRepository;
 import com.kou.rollcall.repositories.StudentRepository;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
@@ -46,6 +50,9 @@ public class LessonController
 
     @Autowired
     private LessonServiceImpl lessonService;
+
+    @Autowired
+    private AcademicianRepository academicianRepository;
 
     @GetMapping("/lessons/{username}/academicianUsername")
     private List<Lesson> getLessonsByAcademician(@PathVariable("username") String username)
@@ -83,6 +90,24 @@ public class LessonController
         HashMap<String, Set> returnMap = new HashMap<>();
 
         Lesson lesson = lessonRepository.getLessonByName(lessonName);
+
+        if (lesson != null)
+        {
+            returnMap.put("data", lesson.getStudents());
+
+            return new ResponseEntity<>(returnMap, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("false", HttpStatus.OK);
+
+    }
+
+    @GetMapping("/students/{id}/lessonId")
+    private ResponseEntity<Object> getStudentsByLessonID(@PathVariable("id") String lessonId)
+    {
+        HashMap<String, Set> returnMap = new HashMap<>();
+
+        Lesson lesson = lessonRepository.getLessonById(Long.valueOf(lessonId));
 
         if (lesson != null)
         {
@@ -169,13 +194,84 @@ public class LessonController
     }
 
 
-//    @PostMapping(value = "/saveStudent")
-//    private ResponseEntity<Book> saveBook(@RequestBody Book book)
-//    {
-//        bookRepository.save(book);
-//        log.info("Books Saved  : " + book);
-//        return new ResponseEntity<Book>(book, HttpStatus.OK);
-//    }
+    @PostMapping(value = "/saveAcademician")
+    private ResponseEntity<Object> saveAcademician(@RequestParam("name") String academicianName, @RequestParam("surname") String academicianSurName, @RequestParam("username") String academicianUsername)
+    {
+
+        if (!academicianName.equals("") && !academicianSurName.equals("") && !academicianUsername.equals(""))
+        {
+            try
+            {
+                Academician academician = new Academician();
+                academician.setPassword("1");
+                academician.setDepartment(Department.Bilgisiyar_Mühendisliği);
+                academician.setFaculty(Faculty.Mühendislik);
+                academician.setName(academicianName);
+                academician.setSurname(academicianSurName);
+                academician.setUsername(academicianUsername);
+                academicianRepository.save(academician);
+
+                return new ResponseEntity<Object>(true, HttpStatus.OK);
+            }
+            catch (Exception e)
+            {
+                return new ResponseEntity<Object>(false, HttpStatus.OK);
+
+            }
+        }
+        else
+        {
+            return new ResponseEntity<Object>(false, HttpStatus.OK);
+
+        }
+
+    }
 
 
+    @PostMapping(value = "/lesson/saveAcademicianLessons")
+    private ResponseEntity<Object> saveAcademicianLessons(@RequestParam("academicianId") String academicianId, @RequestParam("lessonId") Long lessonId)
+    {
+        Lesson lesson = lessonRepository.findOne(lessonId);
+        Academician academician = lesson.getAcademician();
+
+        if (academician == null)
+        {
+            academician = academicianRepository.findOne(Long.valueOf(academicianId));
+            lesson.setAcademician(academician);
+            lessonRepository.save(lesson);
+
+            return new ResponseEntity<Object>(true, HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<Object>(false, HttpStatus.OK);
+
+        }
+
+    }
+
+    @PostMapping(value = "/lesson/saveLesson")
+    private ResponseEntity<Object> saveLessons(@RequestBody Lesson lesson)
+    {
+        if (lesson.getName() != null || lesson.getClock() != null || lesson.getDay() != null )
+        {
+            Academician academician = academicianRepository.findOne(lesson.getAcademician().getId());
+
+            lesson.setAcademician(academician);
+            lessonRepository.save(lesson);
+
+            lesson = lessonRepository.getLessonByName(lesson.getName());
+
+            academician.getLessons().add(lesson);
+            academicianRepository.save(academician);
+
+            return new ResponseEntity<Object>(true, HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<Object>(false, HttpStatus.OK);
+
+        }
+
+    }
 }

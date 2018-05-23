@@ -98,6 +98,8 @@ public class RollCallController
 
     }
 
+
+    //Bugunu getir
     @PostMapping(value = "/rollcall/getRollcall")
     private ResponseEntity<Object> getRollCallAcademician(@PathParam("lessonId") String lessonId,
                                                           @PathParam("academicianId") String academicianId)
