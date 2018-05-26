@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -292,6 +293,33 @@ public class LessonController
         {
             return new ResponseEntity<Object>(false, HttpStatus.OK);
 
+        }
+
+    }
+
+    @GetMapping(value = "/lesson/getAll")
+    private ResponseEntity<Object> getAllLesson()
+    {
+
+        HashMap<String, List> lessonMap = new HashMap<>();
+
+        lessonMap.put("dersler", lessonRepository.findAll());
+
+        return new ResponseEntity<Object>(lessonMap, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/lesson/deleteLesson")
+    private ResponseEntity<Object> deleteLesson(@RequestParam("lessonId") String LessonId)
+    {
+        try
+        {
+            lessonRepository.delete(Long.valueOf(LessonId));
+            return new ResponseEntity<Object>(true, HttpStatus.OK);
+
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(false, HttpStatus.OK);
         }
 
     }
