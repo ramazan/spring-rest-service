@@ -4,6 +4,7 @@ import com.kou.rollcall.model.Lesson;
 import com.kou.rollcall.model.RollCall;
 import com.kou.rollcall.model.RollCallInfo;
 import com.kou.rollcall.model.Student;
+import com.kou.rollcall.repositories.AcademicianRepository;
 import com.kou.rollcall.repositories.LessonRepository;
 import com.kou.rollcall.repositories.RollCallRepository;
 import com.kou.rollcall.repositories.StudentRepository;
@@ -39,6 +40,9 @@ public class RollCallController
 
     @Autowired
     private LessonRepository lessonRepository;
+
+    @Autowired
+    private AcademicianRepository academicianRepository;
 
     @PostMapping(value = "/rollcall")
     private ResponseEntity<Object> saveRollCall(@PathParam("lessonId") String lessonId,
@@ -196,5 +200,12 @@ public class RollCallController
         {
             return new ResponseEntity<>("false", HttpStatus.OK);
         }
+    }
+
+
+    @GetMapping("/getAcademicians")
+    private ResponseEntity<Object> getAcademicians()
+    {
+        return  new ResponseEntity<Object>(academicianRepository.findAll(),HttpStatus.OK);
     }
 }
