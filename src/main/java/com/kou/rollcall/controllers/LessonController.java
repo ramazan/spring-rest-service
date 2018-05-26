@@ -195,20 +195,16 @@ public class LessonController
 
 
     @PostMapping(value = "/saveAcademician")
-    private ResponseEntity<Object> saveAcademician(@RequestParam("name") String academicianName, @RequestParam("surname") String academicianSurName, @RequestParam("username") String academicianUsername)
+    private ResponseEntity<Object> saveAcademician(@RequestBody Academician academician)
     {
 
-        if (!academicianName.equals("") && !academicianSurName.equals("") && !academicianUsername.equals(""))
+        if (academician != null)
         {
             try
             {
-                Academician academician = new Academician();
                 academician.setPassword("1");
                 academician.setDepartment(Department.Bilgisiyar_Mühendisliği);
                 academician.setFaculty(Faculty.Mühendislik);
-                academician.setName(academicianName);
-                academician.setSurname(academicianSurName);
-                academician.setUsername(academicianUsername);
                 academicianRepository.save(academician);
 
                 return new ResponseEntity<Object>(true, HttpStatus.OK);
