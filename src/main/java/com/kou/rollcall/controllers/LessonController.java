@@ -308,7 +308,7 @@ public class LessonController
         return new ResponseEntity<Object>(lessonMap, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/lesson/deleteLesson")
+    @PostMapping(value = "/lesson/deleteLesson")
     private ResponseEntity<Object> deleteLesson(@RequestParam("lessonId") String LessonId)
     {
         try
@@ -323,4 +323,17 @@ public class LessonController
         }
 
     }
+
+
+    @GetMapping(value = "/lesson/getLesson")
+    private ResponseEntity<Object> getLesson(@RequestParam("lessonId") String lessonId)
+    {
+
+        HashMap<String, Lesson> lessonMap = new HashMap<>();
+
+        lessonMap.put("ders", lessonRepository.findOne(Long.valueOf(lessonId)));
+
+        return new ResponseEntity<Object>(lessonMap, HttpStatus.OK);
+    }
+
 }
