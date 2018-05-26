@@ -249,7 +249,7 @@ public class LessonController
     @PostMapping(value = "/lesson/saveLesson")
     private ResponseEntity<Object> saveLessons(@RequestBody Lesson lesson)
     {
-        if (lesson.getName() != null || lesson.getClock() != null || lesson.getDay() != null )
+        if (lesson.getName() != null || lesson.getClock() != null || lesson.getDay() != null)
         {
             Academician academician = academicianRepository.findOne(lesson.getAcademician().getId());
 
@@ -257,6 +257,31 @@ public class LessonController
             lessonRepository.save(lesson);
 
             lesson = lessonRepository.getLessonByName(lesson.getName());
+
+            academician.getLessons().add(lesson);
+            academicianRepository.save(academician);
+
+            return new ResponseEntity<Object>(true, HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<Object>(false, HttpStatus.OK);
+
+        }
+
+    }
+
+    @PostMapping(value = "/lesson/updateLesson")
+    private ResponseEntity<Object> updateLesson(@RequestBody Lesson lesson)
+    {
+        if (lesson.getId() != null)
+        {
+            Academician academician = academicianRepository.findOne(lesson.getAcademician().getId());
+
+            lesson.setAcademician(academician);
+            lessonRepository.save(lesson);
+
+            lesson = lessonRepository.getLessonById(lesson.getId());
 
             academician.getLessons().add(lesson);
             academicianRepository.save(academician);
