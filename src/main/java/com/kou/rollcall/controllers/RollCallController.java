@@ -205,13 +205,5 @@ public class RollCallController
     }
 
 
-    @GetMapping("/getAcademicians")
-    private ResponseEntity<Object> getAcademicians()
-    {
-        HashMap<String, List> academicianMap = new HashMap<>();
 
-        academicianMap.put("academician", academicianRepository.findAll());
-
-        return new ResponseEntity<Object>(academicianMap, HttpStatus.OK);
-    }
 }

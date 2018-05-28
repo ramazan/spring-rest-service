@@ -196,36 +196,6 @@ public class LessonController
     }
 
 
-    @PostMapping(value = "/saveAcademician")
-    private ResponseEntity<Object> saveAcademician(@RequestBody Academician academician)
-    {
-
-        if (academician != null)
-        {
-            try
-            {
-                academician.setPassword("1");
-                academician.setDepartment(Department.Bilgisiyar_Mühendisliği);
-                academician.setFaculty(Faculty.Mühendislik);
-                academicianRepository.save(academician);
-
-                return new ResponseEntity<Object>(true, HttpStatus.OK);
-            }
-            catch (Exception e)
-            {
-                return new ResponseEntity<Object>(false, HttpStatus.OK);
-
-            }
-        }
-        else
-        {
-            return new ResponseEntity<Object>(false, HttpStatus.OK);
-
-        }
-
-    }
-
-
     @PostMapping(value = "/lesson/saveAcademicianLessons")
     private ResponseEntity<Object> saveAcademicianLessons(@RequestParam("academicianId") String academicianId, @RequestParam("lessonId") Long lessonId)
     {
