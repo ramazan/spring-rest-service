@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:51018")
 @RequestMapping("/api/academician")
 public class AcademicianController
 {
@@ -63,11 +65,11 @@ public class AcademicianController
     {
         if (academician.getId() != null)
         {
-            Academician akademsiyen = academicianRepository.findOne(academician.getId());
-            akademsiyen.setUsername(academician.getUsername());
-            akademsiyen.setName(academician.getName());
-            akademsiyen.setSurname(academician.getSurname());
-            academicianRepository.save(akademsiyen);
+            Academician akademisyen = academicianRepository.findOne(academician.getId());
+            akademisyen.setUsername(academician.getUsername());
+            akademisyen.setName(academician.getName());
+            akademisyen.setSurname(academician.getSurname());
+            academicianRepository.save(akademisyen);
 
             return new ResponseEntity<Object>(true, HttpStatus.OK);
         }
