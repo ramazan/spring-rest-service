@@ -22,7 +22,7 @@ import java.util.Set;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = "http://localhost:51018")
+@CrossOrigin(origins = {"http://localhost:51018","http://ajandam.azurewebsites.net","https://ajandam.azurewebsites.net"})
 @RequestMapping("/api")
 public class LoginController
 {

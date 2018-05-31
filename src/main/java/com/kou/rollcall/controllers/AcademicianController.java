@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Controller
-@CrossOrigin(origins = "http://localhost:51018")
+@CrossOrigin(origins = {"http://localhost:51018","http://ajandam.azurewebsites.net","https://ajandam.azurewebsites.net"})
 @RequestMapping("/api/academician")
 public class AcademicianController
 {
