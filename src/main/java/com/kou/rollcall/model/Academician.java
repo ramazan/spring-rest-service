@@ -2,13 +2,10 @@ package com.kou.rollcall.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +23,7 @@ public class Academician
     private String name;
     private String surname;
     private String username;
+    private String uuid;
 
     @OneToMany(mappedBy = "academician")
     @JsonIgnoreProperties("academician")
@@ -40,6 +38,16 @@ public class Academician
 
     @Enumerated(value = EnumType.STRING)
     private Faculty faculty;
+
+    public String getUuid()
+    {
+        return uuid;
+    }
+
+    public void setUuid(String uuid)
+    {
+        this.uuid = uuid;
+    }
 
     public Long getId()
     {

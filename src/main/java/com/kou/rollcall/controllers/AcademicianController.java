@@ -7,6 +7,7 @@ import com.kou.rollcall.repositories.AcademicianRepository;
 import com.kou.rollcall.repositories.LessonRepository;
 import com.kou.rollcall.repositories.RollCallRepository;
 import com.kou.rollcall.repositories.StudentRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +18,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
 
 @Controller
-@CrossOrigin(origins = {"http://localhost:51018","http://ajandam.azurewebsites.net","https://ajandam.azurewebsites.net"})
+@CrossOrigin(origins = {"http://localhost:51018", "http://ajandam.azurewebsites.net", "https://ajandam.azurewebsites.net"})
 @RequestMapping("/api/academician")
 public class AcademicianController
 {
-
-
     @Autowired
     private RollCallRepository rollCallRepository;
 
@@ -104,5 +104,18 @@ public class AcademicianController
             return new ResponseEntity<Object>(false, HttpStatus.OK);
 
         }
+    }
+
+    @PostMapping(value = "/saveUUID")
+    private ResponseEntity<Object> saveUUID(@RequestParam("academicianId") String academicianId, @RequestParam("UUID") String UUID)
+    {
+        if (StringUtils.isNotBlank(academicianId) && StringUtils.isNotBlank(UUID))
+        {
+            Academician academician = academicianRepository.findOne(Long.valueOf(academicianId));
+            academician.setUuid(UUID);
+            academicianRepository.save(academician);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.OK);
     }
 }
