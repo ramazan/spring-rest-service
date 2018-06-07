@@ -28,7 +28,7 @@ import java.util.Set;
 import java.util.TimeZone;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:51018","http://ajandam.azurewebsites.net","https://ajandam.azurewebsites.net"})
+@CrossOrigin(origins = {"http://localhost:51018", "http://ajandam.azurewebsites.net", "https://ajandam.azurewebsites.net"})
 @RequestMapping("/api")
 public class RollCallController
 {
@@ -72,7 +72,7 @@ public class RollCallController
         for (RollCall rolcall : yoklama)
         {
             if (rolcall.getDate().toString().equals(timeStamp))
-                return new ResponseEntity<>("false", HttpStatus.OK);
+                return new ResponseEntity<>("false # Yoklamaya Zaten Kayıtlısın!", HttpStatus.OK);
         }
 
         Set<Lesson> lessons = studentRepository.findOne(studentRepository.findOne(ogrenciId).getId()).getLessons();
@@ -94,12 +94,12 @@ public class RollCallController
             catch (NumberFormatException e)
             {
                 e.printStackTrace();
-                return new ResponseEntity<>(false, HttpStatus.OK);
+                return new ResponseEntity<>("false # Yoklamaya kaydolurken hata oluştu!", HttpStatus.OK);
             }
         }
         else
         {
-            return new ResponseEntity<>("false", HttpStatus.OK);
+            return new ResponseEntity<>("false # Bu derse yetkiniz bulunmamaktadır!", HttpStatus.OK);
         }
 
     }
@@ -203,7 +203,6 @@ public class RollCallController
             return new ResponseEntity<>("false", HttpStatus.OK);
         }
     }
-
 
 
 }
