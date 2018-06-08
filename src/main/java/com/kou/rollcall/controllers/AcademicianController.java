@@ -4,9 +4,6 @@ import com.kou.rollcall.model.Academician;
 import com.kou.rollcall.model.Department;
 import com.kou.rollcall.model.Faculty;
 import com.kou.rollcall.repositories.AcademicianRepository;
-import com.kou.rollcall.repositories.LessonRepository;
-import com.kou.rollcall.repositories.RollCallRepository;
-import com.kou.rollcall.repositories.StudentRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,14 +25,6 @@ import java.util.List;
 @RequestMapping("/api/academician")
 public class AcademicianController
 {
-    @Autowired
-    private RollCallRepository rollCallRepository;
-
-    @Autowired
-    private StudentRepository studentRepository;
-
-    @Autowired
-    private LessonRepository lessonRepository;
 
     @Autowired
     private AcademicianRepository academicianRepository;

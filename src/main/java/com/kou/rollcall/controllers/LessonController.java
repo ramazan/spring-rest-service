@@ -183,16 +183,16 @@ public class LessonController
             }
         }
 
-        if (rollCallInfoList.size() != 0)
-        {
+//        if (rollCallInfoList.size() != 0)
+//        {
             rollcallMap.put("ogrenci_devam_bilgileri", rollCallInfoList);
 
             return new ResponseEntity<Object>(rollcallMap, HttpStatus.OK);
-        }
-        else // eğer hiç devamsızlık bilgisi yoksa
-        {
-            return new ResponseEntity<Object>("false", HttpStatus.OK);
-        }
+//        }
+//        else // eğer hiç devamsızlık bilgisi yoksa
+//        {
+//            return new ResponseEntity<Object>("false", HttpStatus.OK);
+//        }
     }
 
 

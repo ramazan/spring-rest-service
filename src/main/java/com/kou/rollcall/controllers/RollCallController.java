@@ -43,9 +43,6 @@ public class RollCallController
     @Autowired
     private LessonRepository lessonRepository;
 
-    @Autowired
-    private AcademicianRepository academicianRepository;
-
     @PostMapping(value = "/rollcall")
     private ResponseEntity<Object> saveRollCall(@PathParam("lessonId") String lessonId,
                                                 @PathParam("studentId") String studentId,

@@ -32,10 +32,6 @@ public class LoginController
     @Autowired
     private AcademicianRepository academicianRepository;
 
-    @Autowired
-    private LessonService lessonService;
-
-
     /*
      * Kullanıcı bilgilerinin alınıp valide edilen method
      */
