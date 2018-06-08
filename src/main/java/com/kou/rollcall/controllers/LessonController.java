@@ -169,30 +169,31 @@ public class LessonController
             List<RollCall> rollCall = rollCallRepository.getRollCallByStudent_IdAndLesson_Id(student.getId(), lessonId);
             StudentRollCall studentRollCall = new StudentRollCall();
 
-            if (rollCall.size() != 0)
-            {
-                studentRollCall.setOgrenci(rollCall.get(0).getStudent());
+//            if (rollCall.size() != 0)
+//            {
+                studentRollCall.setOgrenci(student);
 
                 RollCallInfo rollCallInfo = new RollCallInfo();
                 rollCallInfo.setDersAdi(lesson.getName());
                 rollCallInfo.setDevamBilgisi(rollCall.size());
                 rollCallInfo.setDevamsizlikBilgisi(WEEK - rollCall.size());
+                rollCallInfo.setDersId(lessonId);
 
                 studentRollCall.setDevamsizlik(rollCallInfo);
                 rollCallInfoList.add(studentRollCall);
-            }
+//            }
         }
 
-//        if (rollCallInfoList.size() != 0)
-//        {
+        if (rollCallInfoList.size() != 0)
+        {
             rollcallMap.put("ogrenci_devam_bilgileri", rollCallInfoList);
 
             return new ResponseEntity<Object>(rollcallMap, HttpStatus.OK);
-//        }
-//        else // eğer hiç devamsızlık bilgisi yoksa
-//        {
-//            return new ResponseEntity<Object>("false", HttpStatus.OK);
-//        }
+        }
+        else // eğer hiç ögrenci kaydı yoksa
+        {
+            return new ResponseEntity<Object>("false", HttpStatus.OK);
+        }
     }
 
 
