@@ -2,7 +2,6 @@ package com.kou.rollcall.controllers;
 
 import com.kou.rollcall.model.Academician;
 import com.kou.rollcall.model.Department;
-import com.kou.rollcall.model.Faculty;
 import com.kou.rollcall.model.Lesson;
 import com.kou.rollcall.model.RollCall;
 import com.kou.rollcall.model.RollCallInfo;
@@ -34,7 +33,7 @@ import java.util.Set;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = {"http://localhost:51018","http://ajandam.azurewebsites.net","https://ajandam.azurewebsites.net"})
+@CrossOrigin(origins = {"http://localhost:51018", "http://ajandam.azurewebsites.net", "https://ajandam.azurewebsites.net"})
 @RequestMapping("/api")
 public class LessonController
 {
@@ -171,16 +170,16 @@ public class LessonController
 
 //            if (rollCall.size() != 0)
 //            {
-                studentRollCall.setOgrenci(student);
+            studentRollCall.setOgrenci(student);
 
-                RollCallInfo rollCallInfo = new RollCallInfo();
-                rollCallInfo.setDersAdi(lesson.getName());
-                rollCallInfo.setDevamBilgisi(rollCall.size());
-                rollCallInfo.setDevamsizlikBilgisi(WEEK - rollCall.size());
-                rollCallInfo.setDersId(lessonId);
+            RollCallInfo rollCallInfo = new RollCallInfo();
+            rollCallInfo.setDersAdi(lesson.getName());
+            rollCallInfo.setDevamBilgisi(rollCall.size());
+            rollCallInfo.setDevamsizlikBilgisi(WEEK - rollCall.size());
+            rollCallInfo.setDersId(lessonId);
 
-                studentRollCall.setDevamsizlik(rollCallInfo);
-                rollCallInfoList.add(studentRollCall);
+            studentRollCall.setDevamsizlik(rollCallInfo);
+            rollCallInfoList.add(studentRollCall);
 //            }
         }
 
@@ -249,14 +248,21 @@ public class LessonController
     {
         if (lesson.getId() != null)
         {
+            Lesson  lesson1 = lessonRepository.findOne(lesson.getId());
+
             Academician academician = academicianRepository.findOne(lesson.getAcademician().getId());
 
-            lesson.setAcademician(academician);
-            lessonRepository.save(lesson);
+            lesson1.setAcademician(academician);
+            lesson1.setClock(lesson.getClock());
+            lesson1.setDay(lesson.getDay());
+            lesson1.setLocation(lesson.getLocation());
+            lesson1.setName(lesson.getName());
 
-            lesson = lessonRepository.getLessonById(lesson.getId());
+            lessonRepository.save(lesson1);
 
-            academician.getLessons().add(lesson);
+            lesson1 = lessonRepository.getLessonById(lesson.getId());
+
+            academician.getLessons().add(lesson1);
             academicianRepository.save(academician);
 
             return new ResponseEntity<Object>(true, HttpStatus.OK);
